@@ -29,7 +29,7 @@ public class Home {
 	
 	@BeforeMethod()
 	public void Object_Read() throws IOException {
-		FileInputStream HomeObjRep = new FileInputStream(System.getProperty("user.dir")+"\\src\\redMartObject\\Home_Page_Web_Elements.OR");
+		FileInputStream HomeObjRep = new FileInputStream(System.getProperty("user.dir")+"\\src\\redMart\\ObjectRepo.properties");
 		//Object = new Properties();
 		Object.load(HomeObjRep);
 	}
