@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 public class Catalog extends Home {
 	public static int cart_quantity = 0;
 	@SuppressWarnings("deprecation")
-	@Test (dependsOnMethods = { "Log_In" })
+	@Test (dependsOnMethods = "Log_In")
 	public void Catalog_Without_Search() throws IOException, InterruptedException {
 		
 		//waiting until the text "My Cart" is displayed post logged in
@@ -26,31 +26,33 @@ public class Catalog extends Home {
 		assert driver.findElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))).getText().equals(zero_quantity);
 		driver.findElement(By.id(Object.getProperty("HomePage.Logo"))).click();
 		
-		Add_Item();
+		//Add_Item();
 		
 		//Mouse Hover "Cart" link function
-		Cart_Quantity();
+		//Cart_Quantity();
 	}
 		
 		
-	//This function will be called whenever there is a need to verify the number of items or quantity of the cart
+	//This function will be used whenever there is a need to verify the number of items or quantity of the cart
+	@Test (dependsOnMethods = "Add_Item")
 	private void Cart_Quantity() throws InterruptedException {
 		//Performing Mouse Hover action
 		Actions action = new Actions(driver);
 		WebElement Cart = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Cart_Post_Item_Addition")));
 		action.moveToElement(Cart).build().perform();
-		Thread.sleep(2000);
+		Thread.sleep(5000);
 		assert Integer.parseInt(driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText()) == cart_quantity;
 	}
 
-	//This function will be called whenever there is a need to Add items to the cart
+	//This function will be used whenever there is a need to Add items to the cart
+	@Test (dependsOnMethods = "Catalog_Without_Search")
 	public void Add_Item() throws InterruptedException {
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Item_Description"))).click();
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Add_To_Cart_Button"))).click();
+		Thread.sleep(2000);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Cart_Quantity"))));
 		cart_quantity++;
 		System.out.println(cart_quantity);
 		Cart_Quantity();
-		Thread.sleep(5000);
 	}
 }
