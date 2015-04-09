@@ -37,12 +37,12 @@ public class Home {
 	@Test
 	public void Log_In() throws IOException, InterruptedException{
 
-			wait = new WebDriverWait(driver, 10);
+			wait = new WebDriverWait(driver, 15);
 			try {
 				//waiting until the "Huge Product Range" div is getting loaded
 				
-				Thread.sleep(2000);
-				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				Thread.sleep(5000);
+				driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(Object.getProperty("HomePage.Huge_Product_Range_Image"))));
 				}
 			catch (InterruptedException e) {
