@@ -11,6 +11,9 @@ import org.testng.annotations.Test;
 
 public class Catalog extends Home {
 	public static int cart_quantity = 0;
+	public static String prod_desc = "";
+	public static String prod_price = "";
+	
 	@SuppressWarnings("deprecation")
 	@Test (dependsOnMethods = "Log_In")
 	public void Catalog_Without_Search() throws IOException, InterruptedException {
@@ -25,11 +28,6 @@ public class Catalog extends Home {
 		String zero_quantity = "My Cart";
 		assert driver.findElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))).getText().equals(zero_quantity);
 		driver.findElement(By.id(Object.getProperty("HomePage.Logo"))).click();
-		
-		//Add_Item();
-		
-		//Mouse Hover "Cart" link function
-		//Cart_Quantity();
 	}
 		
 		
@@ -43,11 +41,16 @@ public class Catalog extends Home {
 		Thread.sleep(5000);
 		assert Integer.parseInt(driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText()) == cart_quantity;
 	}
-
+	
+	
 	//This function will be used whenever there is a need to Add items to the cart
 	@Test (dependsOnMethods = "Catalog_Without_Search")
 	public void Add_Item() throws InterruptedException {
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Item_Description"))).click();
+		prod_desc = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Product_Description"))).getText();
+		prod_price = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Product_Price"))).getText();
+		System.out.println(prod_price);
+		System.out.println(prod_desc);
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Add_To_Cart_Button"))).click();
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Cart_Quantity"))));
