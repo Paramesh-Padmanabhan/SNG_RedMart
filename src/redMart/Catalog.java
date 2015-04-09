@@ -27,22 +27,20 @@ public class Catalog extends Home {
 		driver.findElement(By.id(Object.getProperty("HomePage.Logo"))).click();
 		
 		Add_Item();
+		
 		//Mouse Hover "Cart" link function
 		Cart_Quantity();
 	}
 		
 		
 	//This function will be called whenever there is a need to verify the number of items or quantity of the cart
-	private void Cart_Quantity() {
+	private void Cart_Quantity() throws InterruptedException {
 		//Performing Mouse Hover action
-		System.out.println((driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText()).substring(1));
 		Actions action = new Actions(driver);
 		WebElement Cart = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Cart_Post_Item_Addition")));
 		action.moveToElement(Cart).build().perform();
-		//List test = (List) driver.findElements(By.xpath(Object.getProperty("CatalogPage.Quantity"))).get(2);
-		System.out.println((driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText()));
-		
-		//char quantity = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText().toString().charAt(2);
+		Thread.sleep(2000);
+		assert Integer.parseInt(driver.findElement(By.xpath(Object.getProperty("CatalogPage.Quantity"))).getText()) == cart_quantity;
 	}
 
 	//This function will be called whenever there is a need to Add items to the cart
