@@ -29,29 +29,40 @@ public class Cart extends Catalog{
 		 * Challenges Faced : Earlier I didn't used the condition "text.length() > 1". And hence when quantity was passed as an argument, it threw 
 		 * 					empty string error
 		 */
-		
 		Thread.sleep(4000);
-		assert to_number(driver.findElement(By.xpath(Object.getProperty("CartPage.Price"))).getText()) == 
-				(to_number(prod_price) * to_number(driver.findElement(By.xpath(Object.getProperty("CartPage.Quantity"))).getText()));
-		assert to_number(driver.findElement(By.xpath(Object.getProperty("CartPage.Actual_Product_Amount"))).getText()) == to_number(prod_price);
-		if (to_number(prod_price) < 75)
-			assert to_number(driver.findElement(By.xpath(Object.getProperty("CartPage.Total_Amount_With_Shipping"))).getText()) == (to_number(prod_price)+7.00);
+		assert To_Number(driver.findElement(By.xpath(Object.getProperty("CartPage.Price"))).getText()) == 
+				(To_Number(prod_price) * To_Number(driver.findElement(By.xpath(Object.getProperty("CartPage.Quantity"))).getText()));
+		assert To_Number(driver.findElement(By.xpath(Object.getProperty("CartPage.Actual_Product_Amount"))).getText()) == To_Number(prod_price);
+		if (To_Number(prod_price) < 75)
+			assert To_Number(driver.findElement(By.xpath(Object.getProperty("CartPage.Total_Amount_With_Shipping"))).getText()) == (To_Number(prod_price)+7.00);
 		else
-			assert to_number(driver.findElement(By.xpath(Object.getProperty("CartPage.Total_Amount_With_Shipping"))).getText()) == to_number(prod_price);
-			
+			assert To_Number(driver.findElement(By.xpath(Object.getProperty("CartPage.Total_Amount_With_Shipping"))).getText()) == To_Number(prod_price);
+		driver.findElement(By.xpath(Object.getProperty("CartPage.Coupon_Code"))).click();
 	}
 
 
-	public float to_number(String text) {
+	public float To_Number(String text) {
 		if (text.length() > 1)
 		{
-			price_in_amount = Float.valueOf((text.substring(1)));
-			return price_in_amount;
+			return price_in_amount = Float.valueOf((text.substring(1)));
 		}
 		else 
 		{
-			price_in_amount = Float.valueOf((text));
-			return price_in_amount;
+			return price_in_amount = Float.valueOf((text));
 		}
+	}
+	
+	@Test (dependsOnMethods = "Cart_Amount_Validations")
+	public void Back_To_Shopping() throws InterruptedException {
+		/*
+		 * Waiting for page to get loaded once "BACK TO SHOPPPING" button is clicked. And I'm checking for the availability of the text "Just Arrived"
+		 */
+		if (product_count < 3) {
+				Thread.sleep(3000);
+				driver.findElement(By.xpath(Object.getProperty("CartPage.Back_To_Shopping"))).click();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("CatalogPage.Home_Page")));
+				Add_Item();
+			}
+		product_count++;
 	}
 }

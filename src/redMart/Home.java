@@ -10,12 +10,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Home {
-	float price_in_amount = 0;
+	static float price_in_amount = 0;
+	static int product_count = 0;
 	public static WebDriver driver;
 	public static WebDriverWait wait;	
 	public static Properties Object = new Properties();
@@ -65,9 +67,8 @@ public class Home {
 			driver.findElement(By.xpath(Object.getProperty("HomePage.SignIn_Button"))).click();
 		}
 	
-	/*@AfterTest
-	public void Close_Browser() {
-		//driver.close();
-		driver.quit();
-	}*/
+	@AfterTest
+	public void Remove_Product() {
+		driver.findElement(By.id(Object.getProperty("CartPage.Product_Removal"))).click();
+	}
 }

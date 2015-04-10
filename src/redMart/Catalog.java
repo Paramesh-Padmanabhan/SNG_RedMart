@@ -21,13 +21,21 @@ public class Catalog extends Home {
 		//waiting until the text "My Cart" is displayed post logged in
 		Thread.sleep(10000);
 		wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))));
+		if (product_count == 0)
+		{
+			//Asserting the quantity being displayed in the "Cart" link in the header section
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))));
+			assert wait.until(ExpectedConditions.textToBePresentInElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page")), "My Cart"));
+			String zero_quantity = "My Cart";
+			assert driver.findElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))).getText().equals(zero_quantity);
+		}
 		
-		//Asserting the quantity being displayed in the "Cart" link in the header section
-		assert wait.until(ExpectedConditions.textToBePresentInElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page")), "My Cart"));
-		String zero_quantity = "My Cart";
-		assert driver.findElement(By.xpath(Object.getProperty("CatalogPage.Signed_User_Home_Page"))).getText().equals(zero_quantity);
-		driver.findElement(By.id(Object.getProperty("HomePage.Logo"))).click();
+		else
+		{
+			//Once an item is added, I'm checking for the cart quantity
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Cart_Quantity"))));
+			driver.findElement(By.id(Object.getProperty("HomePage.Logo"))).click();
+		}
 	}
 		
 		
@@ -36,7 +44,7 @@ public class Catalog extends Home {
 	 * @throws InterruptedException
 	 */
 	@Test (dependsOnMethods = "Add_Item")
-	private void Cart_Quantity() throws InterruptedException {
+	protected void Cart_Quantity() throws InterruptedException {
 		//Performing Mouse Hover action
 		Actions action = new Actions(driver);
 		WebElement Cart = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Cart_Post_Item_Addition")));
