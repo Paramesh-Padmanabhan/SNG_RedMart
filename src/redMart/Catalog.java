@@ -52,8 +52,8 @@ public class Catalog extends Home {
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Item_Description"))).click();
 		prod_desc = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Product_Description"))).getText();
 		prod_price = driver.findElement(By.xpath(Object.getProperty("CatalogPage.Product_Price"))).getText();
-		System.out.println(prod_price);
-		System.out.println(prod_desc);
+		/*System.out.println(prod_price);
+		System.out.println(prod_desc);*/
 		driver.findElement(By.xpath(Object.getProperty("CatalogPage.Add_To_Cart_Button"))).click();
 		Thread.sleep(2000);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(Object.getProperty("CatalogPage.Cart_Quantity"))));

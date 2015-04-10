@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class Home {
+	float price_in_amount = 0;
 	public static WebDriver driver;
 	public static WebDriverWait wait;	
 	public static Properties Object = new Properties();
