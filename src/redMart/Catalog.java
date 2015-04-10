@@ -32,6 +32,9 @@ public class Catalog extends Home {
 		
 		
 	//This function will be used whenever there is a need to verify the number of items or quantity of the cart
+	/**
+	 * @throws InterruptedException
+	 */
 	@Test (dependsOnMethods = "Add_Item")
 	private void Cart_Quantity() throws InterruptedException {
 		//Performing Mouse Hover action
